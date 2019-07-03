@@ -106,11 +106,11 @@ if __name__ == '__main__':
         table_data.append(table_line)
 
     send_data = ""
-    send_data += "### " + ", ".join(table_title) + '\n'
+    send_data += "## " + ", ".join(table_title) + '\n'
     for line in table_data:
         send_data += '* ' + ", ".join(line) + '\n'
 
-    send_data += "\n\n#### " + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+    send_data += "\n\n### " + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
     DING_DING_MARKDOWN_TEMPLATE['markdown']['text'] = send_data
     HuobiDMUtil.http_post_request(DING_TALK, params=DING_DING_MARKDOWN_TEMPLATE)
