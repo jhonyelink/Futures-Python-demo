@@ -90,9 +90,9 @@ if __name__ == '__main__':
         NW = tmp_map[TIME_PERIOD_LIST[1]]
         CQ = tmp_map[TIME_PERIOD_LIST[2]]
 
-        CW_CQ = '%.2f‰' % (1000.0 * (CQ - CW) / CW) if CW and CQ else None
-        NW_CQ = '%.2f‰' % (1000.0 * (CQ - NW) / NW) if NW and CQ else None
-        CW_NW = '%.2f‰' % (1000.0 * (NW - CW) / CW) if CW and NW else None
+        CW_CQ = '%.2f' % (1000.0 * (CQ - CW) / CW) if CW and CQ else None
+        NW_CQ = '%.2f' % (1000.0 * (CQ - NW) / NW) if NW and CQ else None
+        CW_NW = '%.2f' % (1000.0 * (NW - CW) / CW) if CW and NW else None
 
         table_line.append(CW_CQ)
         table_line.append(NW_CQ)
@@ -106,7 +106,8 @@ if __name__ == '__main__':
         '''
         table_data.append(table_line)
 
-    send_data = '* ' + ", ".join(table_title) + '\n'
+    send_data = ""
+    #send_data += '* ' + ", ".join(table_title) + '\n'
     for line in table_data:
         send_data += '* ' + ", ".join(line) + '\n'
 
