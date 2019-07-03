@@ -110,7 +110,11 @@ if __name__ == '__main__':
     for line in table_data:
         send_data += '* ' + ", ".join(line) + '\n'
 
-    send_data += "\n\n### " + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+    from datetime import datetime
+    import pytz
+    cn_dt = datetime.now(tz=pytz.timezone('Asia/Shanghai'))
+
+    send_data += "\n\n### " + cn_dt.strftime('%Y-%m-%d %H:%M:%S')
 
     DING_DING_MARKDOWN_TEMPLATE['markdown']['text'] = send_data
     HuobiDMUtil.http_post_request(DING_TALK, params=DING_DING_MARKDOWN_TEMPLATE)
