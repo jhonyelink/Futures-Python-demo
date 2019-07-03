@@ -1,5 +1,6 @@
 # coding:utf-8
 import HuobiDMUtil
+import datetime
 import time
 import json
 
@@ -61,9 +62,7 @@ DING_DING_MARKDOWN_TEMPLATE = {
 
 
 if __name__ == '__main__':
-    table_title = ["数字币",
-                   "当周(溢价)", "次周(溢价)", "季度(溢价)",
-                   "当周/季度(价差)", "次周/季度(价差)", "当周/次周(价差)"]
+    table_title = ["币", "当/季", "次/季", "当/次", "当", "次", "季"]
 
     table_data = []
     for dc in DIGITAL_CURRENCY_LIST:
@@ -84,7 +83,7 @@ if __name__ == '__main__':
             close_price = float(close_price) if close_price else None
             tmp_map[tp] = close_price
 
-            table_line.append('%.2f‰' % (1000.0*(close_price-dc_index)/dc_index) if close_price and dc_index else None)
+            table_line.append('%.2f' % (1000.0*(close_price-dc_index)/dc_index) if close_price and dc_index else None)
 
         CW = tmp_map[TIME_PERIOD_LIST[0]]
         NW = tmp_map[TIME_PERIOD_LIST[1]]
@@ -94,9 +93,9 @@ if __name__ == '__main__':
         NW_CQ = '%.2f' % (1000.0 * (CQ - NW) / NW) if NW and CQ else None
         CW_NW = '%.2f' % (1000.0 * (NW - CW) / CW) if CW and NW else None
 
-        table_line.append(CW_CQ)
-        table_line.append(NW_CQ)
-        table_line.append(CW_NW)
+        table_line.insert(1, CW_NW)
+        table_line.insert(1, NW_CQ)
+        table_line.insert(1, CW_CQ)
 
         '''
                        timeout = ts - dc_index_ts
@@ -107,9 +106,11 @@ if __name__ == '__main__':
         table_data.append(table_line)
 
     send_data = ""
-    #send_data += '* ' + ", ".join(table_title) + '\n'
+    send_data += "### " + ", ".join(table_title) + '\n'
     for line in table_data:
         send_data += '* ' + ", ".join(line) + '\n'
+
+    send_data += "\n\n#### " + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
     DING_DING_MARKDOWN_TEMPLATE['markdown']['text'] = send_data
     HuobiDMUtil.http_post_request(DING_TALK, params=DING_DING_MARKDOWN_TEMPLATE)
