@@ -62,7 +62,7 @@ DING_DING_MARKDOWN_TEMPLATE = {
 
 
 if __name__ == '__main__':
-    table_title = ["币", "当/季", "次/季", "当/次", "当", "次", "季"]
+    table_title = ["当/季", "次/季", "当/次", "当", "次", "季"]
 
     table_data = []
     for dc in DIGITAL_CURRENCY_LIST:
