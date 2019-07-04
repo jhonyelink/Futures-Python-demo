@@ -12,7 +12,7 @@ API_MARKET_DETAIL_MERGED = 'market/detail/merged'
 API_CONTRACT_INDEX = 'api/v1/contract_index'
 
 DING_TALK = 'https://oapi.dingtalk.com/robot/send?' \
-             'access_token=5a304120576fde895401d9e0024793bd04adea5f1cd79e8ca24cab5d654afdb7'
+             'access_token=16a17282c10461487893900a474342778355f0ee1154fd290b29ac53ea349692'
 
 MAX_RESPONSE_TIMEOUT = 300
 
