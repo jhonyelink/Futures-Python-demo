@@ -83,15 +83,15 @@ if __name__ == '__main__':
             close_price = float(close_price) if close_price else None
             tmp_map[tp] = close_price
 
-            table_line.append('%.2f' % (1000.0*(close_price-dc_index)/dc_index) if close_price and dc_index else None)
+            table_line.append('%.1f' % (1000.0*(close_price-dc_index)/dc_index) if close_price and dc_index else None)
 
         CW = tmp_map[TIME_PERIOD_LIST[0]]
         NW = tmp_map[TIME_PERIOD_LIST[1]]
         CQ = tmp_map[TIME_PERIOD_LIST[2]]
 
-        CW_CQ = '%.2f' % (1000.0 * (CQ - CW) / CW) if CW and CQ else None
-        NW_CQ = '%.2f' % (1000.0 * (CQ - NW) / NW) if NW and CQ else None
-        CW_NW = '%.2f' % (1000.0 * (NW - CW) / CW) if CW and NW else None
+        CW_CQ = '%.1f' % (1000.0 * (CQ - CW) / CW) if CW and CQ else None
+        NW_CQ = '%.1f' % (1000.0 * (CQ - NW) / NW) if NW and CQ else None
+        CW_NW = '%.1f' % (1000.0 * (NW - CW) / CW) if CW and NW else None
 
         table_line.insert(1, CW_NW)
         table_line.insert(1, NW_CQ)
