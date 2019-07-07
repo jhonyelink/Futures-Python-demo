@@ -4,9 +4,6 @@ import datetime
 import time
 import json
 
-import os
-os.chdir('./')
-
 import yaml
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
@@ -71,6 +68,9 @@ DING_DING_MARKDOWN_TEMPLATE = {
 
 
 if __name__ == '__main__':
+    import os
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
+
     monitor_period = 5
     send_flag = False
     with open('config/alarm.yml', 'r') as stream:
