@@ -1,7 +1,0 @@
-MONITOR:
-  BTC:
-    threshold: 30
-  DEFAULT:
-    threshold: 40
-  LTC:
-    threshold: 35.0
