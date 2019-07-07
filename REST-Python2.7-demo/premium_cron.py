@@ -140,6 +140,7 @@ if __name__ == '__main__':
     cn_dt = datetime.now(tz=pytz.timezone('Asia/Shanghai'))
 
     send_data += "\n\n### " + cn_dt.strftime('%Y-%m-%d %H:%M:%S')
+    send_data += "\n### 消息发送条件为上下波动%d个点" % monitor_period
 
     DING_DING_MARKDOWN_TEMPLATE['markdown']['text'] = send_data
     if send_flag:
