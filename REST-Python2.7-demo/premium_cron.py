@@ -119,9 +119,9 @@ if __name__ == '__main__':
     send_data += "## " + ", ".join(table_title) + '\n'
     for line in table_data:
         send_data += '* ' + ", ".join(line) + '\n'
-        threshold = monitor.get('MONITOR').get(line[1]).get('threshold') \
-            if line[0] in monitor.get('MONITOR') \
-            else monitor.get('MONITOR').get('DEFAULT').get('threshold')
+        threshold = monitor['MONITOR'][line[0]]['threshold'] \
+            if line[0] in monitor[monitor] \
+            else monitor['MONITOR']['DEFAULT']['threshold']
 
         if float(line[1]) > threshold + monitor_period \
                 or float(line[1]) < threshold - monitor_period:
