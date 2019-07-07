@@ -137,7 +137,7 @@ if __name__ == '__main__':
 
             next_threshold = float(line[1]) - float(line[1]) % monitor_period
             monitor['MONITOR'][line[0]]['threshold'] = next_threshold \
-                if float(line[1]) < threshold - monitor_period \
+                if float(line[1]) > threshold - monitor_period \
                 else next_threshold + monitor_period
 
     from datetime import datetime
