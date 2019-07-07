@@ -3,6 +3,10 @@ import HuobiDMUtil
 import datetime
 import time
 import json
+
+import os
+os.chdir('./')
+
 import yaml
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
