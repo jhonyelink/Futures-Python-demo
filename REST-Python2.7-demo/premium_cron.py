@@ -72,9 +72,6 @@ if __name__ == '__main__':
     with open('config/alarm.yml', 'r') as stream:
         monitor = yaml.load(stream, Loader=Loader)
 
-    print 'BTC' in monitor['MONITOR']
-    exit(0)
-
     table_title = ["当/季", "次/季", "当/次", "当", "次", "季"]
 
     table_data = []
@@ -142,4 +139,5 @@ if __name__ == '__main__':
         HuobiDMUtil.http_post_request(DING_TALK, params=DING_DING_MARKDOWN_TEMPLATE)
         with open('config/alarm.yml', 'w') as write:
             write.write(monitor)
+        print "send ok!"
 
