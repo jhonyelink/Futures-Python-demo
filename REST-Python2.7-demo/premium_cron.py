@@ -72,6 +72,9 @@ if __name__ == '__main__':
     with open('config/alarm.yml', 'r') as stream:
         monitor = yaml.load(stream, Loader=Loader)
 
+    print 'BTC' in monitor['MONITOR']
+    exit(0)
+
     table_title = ["当/季", "次/季", "当/次", "当", "次", "季"]
 
     table_data = []
@@ -120,7 +123,7 @@ if __name__ == '__main__':
     for line in table_data:
         send_data += '* ' + ", ".join(line) + '\n'
         threshold = monitor['MONITOR'][line[0]]['threshold'] \
-            if line[0] in monitor[monitor] \
+            if line[0] in monitor['MONITOR'] \
             else monitor['MONITOR']['DEFAULT']['threshold']
 
         if float(line[1]) > threshold + monitor_period \
