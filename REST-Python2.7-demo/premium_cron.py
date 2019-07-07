@@ -119,6 +119,7 @@ if __name__ == '__main__':
         '''
         table_data.append(table_line)
 
+    bodong_list = []
     send_data = ""
     send_data += "## " + ", ".join(table_title) + '\n'
     for line in table_data:
@@ -130,6 +131,7 @@ if __name__ == '__main__':
         if float(line[1]) > threshold + monitor_period \
                 or float(line[1]) < threshold - monitor_period:
             send_flag = True
+            bodong_list.append(line[0])
             if line[0] not in monitor['MONITOR']:
                 monitor['MONITOR'][line[0]] = {}
 
@@ -141,6 +143,7 @@ if __name__ == '__main__':
 
     send_data += "\n\n### " + cn_dt.strftime('%Y-%m-%d %H:%M:%S')
     send_data += "\n### 消息发送条件为上下波动%d个点" % monitor_period
+    send_data += "\n### %s " % ', '.join(bodong_list)
 
     DING_DING_MARKDOWN_TEMPLATE['markdown']['text'] = send_data
     if send_flag:
