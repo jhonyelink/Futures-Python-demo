@@ -3,6 +3,11 @@ import HuobiDMUtil
 import datetime
 import time
 import json
+import yaml
+try:
+    from yaml import CLoader as Loader, CDumper as Dumper
+except ImportError:
+    from yaml import Loader, Dumper
 
 DIGITAL_CURRENCY_LIST = ['BTC', 'ETH', 'EOS', 'BCH', 'LTC', 'XRP', 'TRX']
 TIME_PERIOD_LIST = ['_CW', '_NW', '_CQ']
@@ -62,6 +67,11 @@ DING_DING_MARKDOWN_TEMPLATE = {
 
 
 if __name__ == '__main__':
+    monitor_period = 5
+    send_flag = False
+    with open('config/alarm.yml', 'r') as stream:
+        monitor = yaml.load(stream, Loader=Loader)
+
     table_title = ["当/季", "次/季", "当/次", "当", "次", "季"]
 
     table_data = []
@@ -109,6 +119,14 @@ if __name__ == '__main__':
     send_data += "## " + ", ".join(table_title) + '\n'
     for line in table_data:
         send_data += '* ' + ", ".join(line) + '\n'
+        threshold = monitor.get('MONITOR').get(line[1]).get('threshold') \
+            if line[0] in monitor.get('MONITOR') \
+            else monitor.get('MONITOR').get('DEFAULT').get('threshold')
+
+        if float(line[1]) > threshold + monitor_period \
+                or float(line[1]) < threshold - monitor_period:
+            send_flag = True
+            monitor['MONITOR'][line[0]]['threshold'] = float(line[1]) - float(line[1]) % monitor_period
 
     from datetime import datetime
     import pytz
@@ -117,5 +135,8 @@ if __name__ == '__main__':
     send_data += "\n\n### " + cn_dt.strftime('%Y-%m-%d %H:%M:%S')
 
     DING_DING_MARKDOWN_TEMPLATE['markdown']['text'] = send_data
-    HuobiDMUtil.http_post_request(DING_TALK, params=DING_DING_MARKDOWN_TEMPLATE)
+    if send_flag:
+        HuobiDMUtil.http_post_request(DING_TALK, params=DING_DING_MARKDOWN_TEMPLATE)
+        with open('config/alarm.yml', 'w') as write:
+            write.write(monitor)
 
