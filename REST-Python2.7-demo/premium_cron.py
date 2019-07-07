@@ -142,6 +142,6 @@ if __name__ == '__main__':
     if send_flag:
         HuobiDMUtil.http_post_request(DING_TALK, params=DING_DING_MARKDOWN_TEMPLATE)
         with open('config/alarm.yml', 'w') as write:
-            write.write(monitor)
+            yaml.dump(monitor, write)
         print "send ok!"
 
