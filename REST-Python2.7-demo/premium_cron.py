@@ -128,7 +128,6 @@ if __name__ == '__main__':
             send_flag = True
             if line[0] not in monitor['MONITOR']:
                 monitor['MONITOR'][line[0]] = {}
-                monitor['MONITOR'][line[0]]['threshold'] = 0
 
             monitor['MONITOR'][line[0]]['threshold'] = float(line[1]) - float(line[1]) % monitor_period
 
