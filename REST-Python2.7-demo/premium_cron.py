@@ -131,7 +131,9 @@ if __name__ == '__main__':
 
         if float(line[1]) > threshold + monitor_period \
                 or float(line[1]) < threshold - monitor_period:
-            send_flag = True
+            if line[0] not in ['TRX']:
+                send_flag = True
+
             if line[0] not in monitor['MONITOR']:
                 monitor['MONITOR'][line[0]] = {}
 
@@ -150,8 +152,10 @@ if __name__ == '__main__':
 
     send_data += "\n\n### " + cn_dt.strftime('%Y-%m-%d %H:%M:%S')
     send_data += "\n### 消息发送条件为上下波动%d个点" % monitor_period
-    send_data += "\n### 扩大: %s " % ', '.join(up_list)
-    send_data += "\n### 缩小: %s " % ', '.join(down_list)
+    if len(up_list) > 0:
+        send_data += "\n### 扩大: %s " % ', '.join(up_list)
+    if len(down_list) > 0:
+        send_data += "\n### 缩小: %s " % ', '.join(down_list)
 
     DING_DING_MARKDOWN_TEMPLATE['markdown']['text'] = send_data
     if send_flag:
