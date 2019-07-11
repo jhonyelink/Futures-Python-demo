@@ -17,7 +17,7 @@ WEBSITE = 'https://api.hbdm.com/'
 API_MARKET_DETAIL_MERGED = 'market/detail/merged'
 API_CONTRACT_INDEX = 'api/v1/contract_index'
 
-DING_TALK_LIST = ['https://oapi.dingtalk.com/robot/send?access_token=16a17282c10461487893900a474342778355f0ee1154fd290b29ac53ea349692',
+DING_TALK_LIST = ['https://oapi.dingtalk.com/robot/send?access_token=efc72da5d1c4f7a8d2bae97d6fd1d5a85d778b45a36bae0cb3a5fd7e8eea0975',
                   "https://oapi.dingtalk.com/robot/send?access_token=d0cb9b78bb1a29f34f00ecd319cf3d15dba8c95177b6a5ca31131ff4f0663a90"]
 
 MAX_RESPONSE_TIMEOUT = 300
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     import os
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-    monitor_period = 3
+    monitor_period = 5
     send_flag = False
     with open('config/alarm.yml', 'r') as stream:
         monitor = yaml.load(stream, Loader=Loader)
@@ -159,7 +159,7 @@ if __name__ == '__main__':
 
     DING_DING_MARKDOWN_TEMPLATE['markdown']['text'] = send_data
     if send_flag:
-        if len(down_list) < len(up_list):
+        if len(down_list) > len(up_list):
             HuobiDMUtil.http_post_request(DING_TALK_LIST[0], params=DING_DING_MARKDOWN_TEMPLATE)
         else:
             HuobiDMUtil.http_post_request(DING_TALK_LIST[1], params=DING_DING_MARKDOWN_TEMPLATE)
