@@ -18,10 +18,7 @@ WEBSITE = 'https://api.hbdm.com/'
 API_MARKET_DETAIL_MERGED = 'market/detail/merged'
 API_CONTRACT_INDEX = 'api/v1/contract_index'
 
-DING_TALK_LIST = ['https://oapi.dingtalk.com/robot/send?access_token=efc72da5d1c4f7a8d2bae97d6fd1d5a85d778b45a36bae0cb3a5fd7e8eea0975',
-                  "https://oapi.dingtalk.com/robot/send?access_token=d0cb9b78bb1a29f34f00ecd319cf3d15dba8c95177b6a5ca31131ff4f0663a90"]
-
-DEFAULT_DING_TALK = 'https://oapi.dingtalk.com/robot/send?access_token=9bf7a73ecc3f4831ca816c07d4aad5c6ee72f324560bf0cbc391614ed0ad654f'
+DEFAULT_DING_TALK = 'https://oapi.dingtalk.com/robot/send?access_token=d0cb9b78bb1a29f34f00ecd319cf3d15dba8c95177b6a5ca31131ff4f0663a90'
 
 MAX_RESPONSE_TIMEOUT = 300
 
