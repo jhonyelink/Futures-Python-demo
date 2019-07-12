@@ -131,7 +131,6 @@ if __name__ == '__main__':
     down_list = []
     send_data = ""
     send_data += "## " + ", ".join(table_title) + '\n'
-    send_data += "\n------------------------"
     for line in table_data:
         send_data += '* ' + ", ".join(line) + '\n'
         threshold = monitor['MONITOR'][line[0]]['threshold'] \
