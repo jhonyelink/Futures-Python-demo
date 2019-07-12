@@ -3,6 +3,7 @@ import HuobiDMUtil
 import datetime
 import time
 import json
+import os, sys
 
 import yaml
 try:
@@ -19,6 +20,8 @@ API_CONTRACT_INDEX = 'api/v1/contract_index'
 
 DING_TALK_LIST = ['https://oapi.dingtalk.com/robot/send?access_token=efc72da5d1c4f7a8d2bae97d6fd1d5a85d778b45a36bae0cb3a5fd7e8eea0975',
                   "https://oapi.dingtalk.com/robot/send?access_token=d0cb9b78bb1a29f34f00ecd319cf3d15dba8c95177b6a5ca31131ff4f0663a90"]
+
+DEFAULT_DING_TALK = 'https://oapi.dingtalk.com/robot/send?access_token=9bf7a73ecc3f4831ca816c07d4aad5c6ee72f324560bf0cbc391614ed0ad654f'
 
 MAX_RESPONSE_TIMEOUT = 300
 
@@ -73,6 +76,9 @@ if __name__ == '__main__':
 
     monitor_period = 5
     send_flag = False
+    if len(sys.argv) > 1:
+        send_flag = True
+
     with open('config/alarm.yml', 'r') as stream:
         monitor = yaml.load(stream, Loader=Loader)
 
@@ -119,10 +125,13 @@ if __name__ == '__main__':
         '''
         table_data.append(table_line)
 
+        print dc
+
     up_list = []
     down_list = []
     send_data = ""
     send_data += "## " + ", ".join(table_title) + '\n'
+    send_data += "\n------------------------"
     for line in table_data:
         send_data += '* ' + ", ".join(line) + '\n'
         threshold = monitor['MONITOR'][line[0]]['threshold'] \
@@ -151,18 +160,23 @@ if __name__ == '__main__':
     cn_dt = datetime.now(tz=pytz.timezone('Asia/Shanghai'))
 
     send_data += "\n\n### " + cn_dt.strftime('%Y-%m-%d %H:%M:%S')
+    send_data += "\n[手动查看明细](http://dc.blankio.com/dingding)"
     send_data += "\n### 消息发送条件为上下波动%d个点" % monitor_period
     if len(up_list) > 0:
         send_data += "\n### 扩大: %s " % ', '.join(up_list)
     if len(down_list) > 0:
         send_data += "\n### 缩小: %s " % ', '.join(down_list)
 
+    if len(down_list) > 0 or len(up_list) > 0:
+        tag = '暴涨'
+        if len(down_list) > len(up_list):
+            tag = '暴跌'
+
+        DING_DING_MARKDOWN_TEMPLATE['markdown']['title'] = '火币--溢价--%s' % tag
+
     DING_DING_MARKDOWN_TEMPLATE['markdown']['text'] = send_data
     if send_flag:
-        if len(down_list) > len(up_list):
-            HuobiDMUtil.http_post_request(DING_TALK_LIST[0], params=DING_DING_MARKDOWN_TEMPLATE)
-        else:
-            HuobiDMUtil.http_post_request(DING_TALK_LIST[1], params=DING_DING_MARKDOWN_TEMPLATE)
+        HuobiDMUtil.http_post_request(DEFAULT_DING_TALK, params=DING_DING_MARKDOWN_TEMPLATE)
 
         with open('config/alarm.yml', 'w') as write:
             yaml.dump(monitor, write)

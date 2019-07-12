@@ -1,17 +1,17 @@
 MONITOR:
   BCH:
-    threshold: 35.0
+    threshold: 20.0
   BTC:
-    threshold: 30
+    threshold: 25.0
   DEFAULT:
     threshold: 10
   EOS:
-    threshold: 35.0
+    threshold: 20.0
   ETH:
-    threshold: 35.0
+    threshold: 25.0
   LTC:
-    threshold: 35.0
+    threshold: 25.0
   TRX:
-    threshold: 35.0
+    threshold: 25.0
   XRP:
-    threshold: 35.0
+    threshold: 20.0
