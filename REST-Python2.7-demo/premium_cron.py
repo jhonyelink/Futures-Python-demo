@@ -157,13 +157,14 @@ if __name__ == '__main__':
 
     send_data += "\n\n### " + cn_dt.strftime('%Y-%m-%d %H:%M:%S')
     send_data += "\n[手动查看明细](http://dc.blankio.com/dingding)"
-    send_data += "\n### 消息发送条件为上下波动%d个点" % monitor_period
-    if len(up_list) > 0:
-        send_data += "\n### 扩大: %s " % ', '.join(up_list)
-    if len(down_list) > 0:
-        send_data += "\n### 缩小: %s " % ', '.join(down_list)
 
     if len(down_list) > 0 or len(up_list) > 0:
+        send_data += "\n### 消息发送条件为上下波动%d个点" % monitor_period
+        if len(up_list) > 0:
+            send_data += "\n### 扩大: %s " % ', '.join(up_list)
+        if len(down_list) > 0:
+            send_data += "\n### 缩小: %s " % ', '.join(down_list)
+
         tag = '暴涨'
         if len(down_list) > len(up_list):
             tag = '暴跌'
